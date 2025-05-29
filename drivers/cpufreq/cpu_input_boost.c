@@ -24,19 +24,19 @@ static unsigned int input_boost_freq_little __read_mostly =
 static unsigned int input_boost_freq_big __read_mostly =
 	CONFIG_INPUT_BOOST_FREQ_PERF;
 static unsigned int input_boost_freq_prime __read_mostly =
-	CONFIG_INPUT_BOOST_FREQ_PERFP;
+	CONFIG_INPUT_BOOST_FREQ_PRIME;
 static unsigned int max_boost_freq_little __read_mostly =
 	CONFIG_MAX_BOOST_FREQ_LP;
 static unsigned int max_boost_freq_big __read_mostly =
 	CONFIG_MAX_BOOST_FREQ_PERF;
 static unsigned int max_boost_freq_prime __read_mostly =
-	CONFIG_MAX_BOOST_FREQ_PERFP;
+	CONFIG_MAX_BOOST_FREQ_PRIME;
 static unsigned int cpu_freq_min_little __read_mostly =
 	CONFIG_CPU_FREQ_MIN_LP;
 static unsigned int cpu_freq_min_big __read_mostly =
 	CONFIG_CPU_FREQ_MIN_PERF;
 static unsigned int cpu_freq_min_prime __read_mostly =
-	CONFIG_CPU_FREQ_MIN_PERFP;
+	CONFIG_CPU_FREQ_MIN_PRIME;
 static unsigned int cpu_freq_idle_little __read_mostly =
 	CONFIG_CPU_FREQ_IDLE_LP;
 
@@ -135,7 +135,7 @@ static unsigned int get_idle_freq(struct cpufreq_policy *policy)
 	else if (cpumask_test_cpu(policy->cpu, cpu_perf_mask))
 		freq = CONFIG_CPU_FREQ_IDLE_PERF;
 	else
-		freq = CONFIG_CPU_FREQ_IDLE_PERFP;
+		freq = CONFIG_CPU_FREQ_IDLE_PRIME;
 
 	return max(freq, policy->cpuinfo.min_freq);
 }
@@ -151,7 +151,7 @@ static void update_online_cpu_policy(void)
 	cpufreq_update_policy(cpu);
 	cpu = cpumask_first_and(cpu_perf_mask, cpu_online_mask);
 	cpufreq_update_policy(cpu);
-	cpu = cpumask_first_and(cpu_perfp_mask, cpu_online_mask);
+	cpu = cpumask_first_and(cpu_prime_mask, cpu_online_mask);
 	cpufreq_update_policy(cpu);
 	put_online_cpus();
 }
@@ -421,7 +421,7 @@ static int __init cpu_input_boost_init(void)
 		goto unregister_handler;
 	}
 
-	thread = kthread_run_perf_critical(cpu_boost_thread, b, "cpu_boostd");
+	thread = kthread_run_perf_critical(cpu_perf_mask, cpu_boost_thread, b, "cpu_boostd");
 	if (IS_ERR(thread)) {
 		ret = PTR_ERR(thread);
 		pr_err("Failed to start CPU boost thread, err: %d\n", ret);
