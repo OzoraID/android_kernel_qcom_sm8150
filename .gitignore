@@ -1,4 +1,4 @@
-#
+ #
 # NOTE! Don't add files that are generated in specific
 # subdirectories here. Add them in the ".gitignore" file
 # in that subdirectory instead.
@@ -129,3 +129,5 @@ kernel/configs/android-*.cfg
 #Ignoring Android.bp link file
 #
 Android.bp
+out
+AK3
