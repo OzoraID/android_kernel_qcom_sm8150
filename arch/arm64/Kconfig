@@ -184,7 +184,6 @@ config ARM64
 	select ARCH_INLINE_WRITE_UNLOCK_BH
 	select ARCH_INLINE_WRITE_UNLOCK_IRQ
 	select ARCH_INLINE_WRITE_UNLOCK_IRQRESTORE
->>>>>>> 1a340a75f1aa (arm64: Inline the spin lock function family)
 	help
 	  ARM 64-bit (AArch64) Linux support.
 
