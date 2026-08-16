@@ -112,7 +112,7 @@ ID
 #
 extra_certificates
 signing_key.pem
-signing_key.priv
+9signing_key.priv
 signing_key.x509
 x509.genkey
 
@@ -129,3 +129,5 @@ kernel/configs/android-*.cfg
 #Ignoring Android.bp link file
 #
 Android.bp
+out
+AK3
